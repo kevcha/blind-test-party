@@ -1,0 +1,7 @@
+.button {
+  @apply inline-block text-white rounded-lg shadow font-semibold px-4 py-2 bg-blue-400;
+}
+
+.button:hover {
+  @apply bg-blue-300;
+}

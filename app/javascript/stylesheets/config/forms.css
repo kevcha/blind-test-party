@@ -1,0 +1,7 @@
+label {
+  display: block;
+}
+
+input[type="text"] {
+  @apply border border-solid border-black px-4 py-2;
+}
