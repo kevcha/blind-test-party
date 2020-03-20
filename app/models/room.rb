@@ -24,6 +24,6 @@ class Room < ApplicationRecord
   private
 
   def set_token
-    self.token = DateTime.now.strftime("%Y%m%d%k%M%S%L").to_i.to_s(36)
+    self.token = DateTime.now.strftime("%Y%m%d%H%M%S%L").to_i.to_s(36)
   end
 end
