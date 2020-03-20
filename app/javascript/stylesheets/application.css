@@ -7,3 +7,39 @@
 @import 'components/buttons';
 
 @import "tailwindcss/utilities";
+
+#participants {
+  width: 600px;
+}
+
+.dealer::before {
+  position: absolute;
+  content: '👉';
+  font-size: 50px;
+  left: -70px;
+}
+
+.current-dealer .player:hover {
+  @apply bg-green-400;
+
+  cursor: pointer;
+}
+
+.current-dealer .player:hover::after {
+  position: absolute;
+  content: '🏆';
+  font-size: 50px;
+  right: -70px;
+}
+
+body.current-dealer {
+  @apply bg-blue-900;
+}
+
+body.current-dealer h1 {
+  @apply text-white;
+}
+
+body.current-dealer button {
+  @apply text-white border-white;
+}

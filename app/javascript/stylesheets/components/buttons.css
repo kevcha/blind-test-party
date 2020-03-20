@@ -5,3 +5,7 @@
 .button:hover {
   @apply bg-blue-300;
 }
+
+button:active {
+  @apply bg-gray-300;
+}
