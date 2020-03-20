@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
     if @room.save
       redirect_to room_path(@room.token)
     else
-      render :new
+      redirect_to root_path
     end
   end
 
