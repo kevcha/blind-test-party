@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   resources :rooms, only: [:create, :show], param: :token do
     member do
-      get '/join', to: 'rooms#join'
+      post '/join', to: 'rooms#join'
+      post '/', to: 'rooms#show'
     end
   end
 
