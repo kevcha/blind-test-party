@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
     @room = Room.new
 
     if @room.save
-      redirect_to room_path(@room.token)
+      redirect_to new_room_player_path(@room.token)
     else
       redirect_to root_path
     end
@@ -13,10 +13,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find_by(token: params[:token])
-
-    redirect_to root_path, notice: "La room est pleine, t'arrives trop tard 🤬" if @room.players.present?
-
-    render :join if session[:username].blank?
+    redirect_to new_room_player_path(@room.token), notice: "La room est pleine, t'arrives trop tard 🤬" unless current_user
   end
 
   def join

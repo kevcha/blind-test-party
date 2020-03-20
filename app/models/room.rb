@@ -1,24 +1,42 @@
 class Room < ApplicationRecord
+  has_many :messages, dependent: :destroy
+  has_many :players, dependent: :destroy
+  belongs_to :dealer, optional: true, class_name: 'Player'
+
   before_create :set_token
 
-  def start_with(players)
-    dealer = players.sample[:username]
-    update(players: players, dealer: dealer)
+  def start!
+    dealer_id = players.pluck(:id).sample
+    update(started: true, dealer_id: dealer_id)
   end
 
-  def increment_score_for(username)
-    u_players = players
-    u_players.each do |player|
-      player['score'] += 5 if player['username'] == username
-    end
-    update(players: u_players)
+  def increment_score_for(id)
+    players.find(id).increment_score!
+  end
+
+  def toggle_play!
+    update(playing: !playing)
+  end
+
+  def stop!
+    players.each(&:not_ready!)
+    update(playing: false, song_id: nil)
+  end
+
+  def set_song(id)
+    players.each(&:not_ready!)
+    update(song_id: id)
+  end
+
+  def everyone_ready?
+    players.pluck(:ready).all?(true)
   end
 
   def update_dealer
-    sorted_players = players.sort_by { |player| player['username'] }
-    index = sorted_players.index { |player| player['username'] == dealer }
-    new_dealer = ((players.length > index + 1) ? sorted_players[index + 1] : sorted_players[0])['username']
-    update(dealer: new_dealer)
+    sorted_ids = players.order(:id).pluck(:id)
+    index = sorted_ids.index { |id| id == dealer.id }
+    new_dealer_id = ((sorted_ids.length > index + 1) ? sorted_ids[index + 1] : sorted_ids[0])
+    update(dealer_id: new_dealer_id)
   end
 
   private

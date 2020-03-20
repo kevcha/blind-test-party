@@ -1,11 +1,42 @@
-<h1 class="text-center text-4xl my-12">It's gonna be..... Wait for it !!! Corodinary 🦇</h1>
+<div class="flex">
+  <div class="flex-grow">
+    <h1 class="text-center text-4xl my-12">It's gonna be..... Wait for it !!! Corodinary 🦇</h1>
 
-<p class="text-center text-blue-600">Fais tourner a tes potes, ils vont arriver 🚀 => <%= room_url(@room.token) %></p>
+    <p class="sharable-link text-center text-blue-600">
+      Fais tourner a tes potes, ils vont arriver 🚀 => <%= room_url(@room.token) %>
+    </p>
 
-<div class="flex justify-center items-center">
-  <button id="start" class="<%= 'hidden' if @room.players.present? %> border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Commencer 🎬</button>
-  <button id="refresh" class="border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Rafraichir 🔥</button>
+    <p class="who-is-dealer hidden text-center text-3xl">
+      C'est <span></span> qui deal 🦦 🎧 !
+    </p>
+
+    <div class="youtube-link mx-auto text-white hidden text-center">
+      <label class="text-2xl">C'est toi le dealer, fait péter ton lien youtube</label>
+      <div class="flex">
+        <input id="songInput" class="flex-grow text-black" type="text" placeholder="Rick Astley - Never Gonna Give You Up">
+        <button id="submitSong" class="border border-black border-solid px-4 py-2 hover:bg-gray-200 mx-4">C'est bon 🤓</button>
+      </div>
+      <p class="loading hidden text-2xl">On attend que ca charge chez tout le monde 😴</p>
+      <p class="toggle hidden text-center text-2xl flex">
+        <button id="togglePlay" class="border my-8 border-black border-solid px-4 py-2 hover:bg-gray-200 mx-4">Play / Pause Pour tout le monde 💥</button>
+        <button id="next" class="border my-8 ml-4 border-black border-solid px-4 py-2 hover:bg-gray-200 mx-4">Next, personne trouve 🐠</button>
+      </p>
+    </div>
+
+    <div class="flex justify-center items-center">
+      <button id="start" class="<%= 'hidden' if @room.started? %> border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Commencer 🎬</button>
+      <button id="refresh" class="border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Rafraichir 🔥</button>
+    </div>
+
+    <div id="participants" class="mx-auto mt-8" data-token="<%= @room.token %>" data-current-user="<%= current_user.id %>"></div>
+    <video id="plyr"></video>
+  </div>
+
+  <div id="chat" class="flex sticky top-0 shadow-lg border-left border-solid border-black flex-col bg-white h-screen">
+    <form id="chatForm">
+      <input type="text" placeholder="Ton message" class="w-full" id="messageInput">
+      <input type="submit" class="hidden">
+    </form>
+    <div class="messages p-3 flex-grow overflow-scroll"></div>
+  </div>
 </div>
-
-<div id="participants" class="mx-auto mt-8" data-token="<%= @room.token %>" data-current-user="<%= current_user %>"></div>
-

@@ -5,14 +5,21 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+    current_player.destroy
     broadcast_game_status
   end
 
   def broadcast_game_status
+    room.reload
     ActionCable.server.broadcast("room_#{params[:token]}", {
       type: 'join',
       players: players,
-      dealer: room&.dealer
+      dealer: room.dealer,
+      started: room.started?,
+      song_id: room.song_id,
+      everyone_ready: room.everyone_ready?,
+      playing: room.playing?,
+      messages: messages
     })
   end
 
@@ -20,38 +27,66 @@ class RoomChannel < ApplicationCable::Channel
     broadcast_game_status
   end
 
+  def message(data)
+    Message.create(body: data['body'], player: current_player, room: room)
+    broadcast_game_status
+  end
+
   def found(data)
-    room.increment_score_for(data['username'])
+    room.increment_score_for(data['userId'])
     room.update_dealer
+    room.stop!
+    broadcast_game_status
+  end
+
+  def setSong(data)
+    room.set_song(data['id'])
     broadcast_game_status
   end
 
   def start
-    room.start_with(players) if room.players.blank?
+    room.start! unless room.started?
+    broadcast_game_status
+  end
+
+  def next
+    room.update_dealer
+    room.stop!
+    broadcast_game_status
+  end
+
+  def toggle
+    room.toggle_play!
+    broadcast_game_status
+  end
+
+  def ready
+    current_player.ready!
     broadcast_game_status
   end
 
   def players
-    players_from_rooms || players_from_connections
-  end
-
-  def players_from_connections
-    connection.server.connections.map do |conn|
+    room.players.reload.map do |player|
       {
-        username: conn.current_user[:username],
-        punchline: conn.current_user[:punchline],
-        score: 0
+        id: player.id,
+        username: player.username,
+        punchline: player.punchline,
+        score: player.score,
+        ready: player.ready
       }
-    end
-  end
-
-  def players_from_rooms
-    if room.players.present?
-      room.players
     end
   end
 
   def room
     Room.find_by(token: params[:token])
+  end
+
+  def messages
+    room.messages.reload.order(created_at: :desc).map do |message|
+      {
+        body: message.body,
+        player: message.player.username
+      }
+    end
   end
 end

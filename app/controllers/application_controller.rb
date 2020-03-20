@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   def current_user
-    session[:username]
+    if session[:player_id]
+      Player.find(session[:player_id])
+    end
   end
   helper_method :current_user
 end

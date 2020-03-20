@@ -12,6 +12,7 @@ gem 'simple_form'
 gem 'webpacker', '~> 4.0'
 
 group :development, :test do
+  gem 'byebug'
 end
 
 group :development do

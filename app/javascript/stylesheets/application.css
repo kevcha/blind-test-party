@@ -8,8 +8,16 @@
 
 @import "tailwindcss/utilities";
 
+#chat {
+  width: 450px;
+}
+
 #participants {
   width: 600px;
+}
+
+.youtube-link {
+  max-width: 800px;
 }
 
 .dealer::before {
@@ -25,11 +33,24 @@
   cursor: pointer;
 }
 
+#plyr,
+.plyr {
+  display: none;
+}
+
 .current-dealer .player:hover::after {
   position: absolute;
   content: '🏆';
   font-size: 50px;
   right: -70px;
+}
+
+.current-dealer .who-is-dealer {
+  @apply hidden;
+}
+
+.current-dealer .youtube-link {
+  @apply block;
 }
 
 body.current-dealer {
