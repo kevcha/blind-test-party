@@ -21,6 +21,7 @@ if (participantsNode) {
   initVideoPlayer();
 
   setCallback((data) => {
+    console.log(data);
     renderPlayers(data);
     updateRoomStatus(data);
     updateChat(data.messages);

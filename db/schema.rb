@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_100049) do
+ActiveRecord::Schema.define(version: 2020_03_21_190257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,14 +27,21 @@ ActiveRecord::Schema.define(version: 2020_03_21_100049) do
 
   create_table "players", force: :cascade do |t|
     t.string "username"
-    t.bigint "room_id", null: false
     t.boolean "ready", default: false
     t.string "punchline"
     t.integer "score", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "online", default: false
-    t.index ["room_id"], name: "index_players_on_room_id"
+  end
+
+  create_table "room_players", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_room_players_on_player_id"
+    t.index ["room_id"], name: "index_room_players_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -50,5 +57,6 @@ ActiveRecord::Schema.define(version: 2020_03_21_100049) do
 
   add_foreign_key "messages", "players"
   add_foreign_key "messages", "rooms"
-  add_foreign_key "players", "rooms"
+  add_foreign_key "room_players", "players"
+  add_foreign_key "room_players", "rooms"
 end

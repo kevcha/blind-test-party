@@ -1,5 +1,6 @@
 class Player < ApplicationRecord
-  belongs_to :room
+  has_many :room_players
+  has_many :rooms, through: :room_players
 
   before_create :set_punchline
 
@@ -12,6 +13,10 @@ class Player < ApplicationRecord
   def online!
     reload
     update(online: true)
+  end
+
+  def add_to(room)
+    room_players.create(room: room)
   end
 
   def offline!

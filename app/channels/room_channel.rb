@@ -13,7 +13,6 @@ class RoomChannel < ApplicationCable::Channel
   def broadcast_game_status
     room.reload
     ActionCable.server.broadcast("room_#{params[:token]}", {
-      type: 'join',
       players: players,
       dealer: room.dealer,
       started: room.started?,

@@ -13,7 +13,12 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find_by(token: params[:token])
-    redirect_to new_room_player_path(@room.token), notice: "La room est pleine, t'arrives trop tard 🤬" unless current_user
+
+    if current_user.blank?
+      redirect_to new_room_player_path(@room.token) unless current_user.present?
+    else
+      attach_player_to_room unless current_user.rooms.include?(@room)
+    end
   end
 
   def join
@@ -24,5 +29,9 @@ class RoomsController < ApplicationController
 
   def set_username
     session[:username] = params[:user][:username] if params[:user].present?
+  end
+
+  def attach_player_to_room
+    current_user.add_to(@room)
   end
 end

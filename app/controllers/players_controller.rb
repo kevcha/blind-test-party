@@ -9,7 +9,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      save_in_session
+      save_id_in_session
       redirect_to room_path(@room.token)
     else
       render :new
@@ -26,10 +26,10 @@ class PlayersController < ApplicationController
     params
       .require(:player)
       .permit(:username)
-      .merge(room: @room)
+      .merge(rooms: [@room])
   end
 
-  def save_in_session
+  def save_id_in_session
     session[:player_id] = @player.id
   end
 end
