@@ -46,7 +46,7 @@ const isDealer = () => {
 const updateRoomStatus = (data) => {
   if (data.started) {
     document.querySelector('#start').classList.add('hidden');
-    document.querySelector('h1').innerText = "C'est partit 🎊🥳🕺✨ !!!";
+    document.querySelector('h1').innerText = "C'est parti 🎊🥳🕺✨ !!!";
     document.querySelector('.sharable-link').classList.add("hidden");
   }
 
