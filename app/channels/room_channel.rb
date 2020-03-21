@@ -1,11 +1,12 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from "room_#{params[:token]}"
+    current_player.online!
     broadcast_game_status
   end
 
   def unsubscribed
-    current_player.destroy
+    current_player.offline!
     broadcast_game_status
   end
 
@@ -62,7 +63,7 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def players
-    room.players.reload.map do |player|
+    room.players.reload.online.map do |player|
       {
         id: player.id,
         username: player.username,

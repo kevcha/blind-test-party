@@ -3,8 +3,20 @@ class Player < ApplicationRecord
 
   before_create :set_punchline
 
+  scope :online, -> { where(online: true) }
+
   def increment_score!
     update(score: score + 1)
+  end
+
+  def online!
+    reload
+    update(online: true)
+  end
+
+  def offline!
+    reload
+    update(online: false)
   end
 
   def ready!
