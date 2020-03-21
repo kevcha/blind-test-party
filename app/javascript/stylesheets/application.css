@@ -62,5 +62,5 @@ body.current-dealer h1 {
 }
 
 body.current-dealer button {
-  @apply text-white border-white;
+  @apply border-white;
 }

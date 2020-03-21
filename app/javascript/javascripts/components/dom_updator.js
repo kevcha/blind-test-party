@@ -49,6 +49,12 @@ const updateRoomStatus = (data) => {
     document.querySelector('h1').innerText = "C'est partit 🎊🥳🕺✨ !!!";
     document.querySelector('.sharable-link').classList.add("hidden");
   }
+
+  if (data.playing) {
+    document.querySelector('#togglePlay').innerText = '⏸ Pause';
+  } else {
+    document.querySelector('#togglePlay').innerText = '▶️ Play 💥';
+  }
 }
 
 const updateChat = (messages) => {
