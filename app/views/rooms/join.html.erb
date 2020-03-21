@@ -1,8 +1,0 @@
-<div class="text-center mt-32">
-  <%= simple_form_for(:user, url: room_path(@room.token), method: :post) do |f| %>
-    <div class="mb-8">
-      <%= f.input :username, label: "C'est quoi ton blaz ?", placeholder: 'Fatal', label_html: { class: 'text-4xl mb-4' }, input_html: { class: 'text-2xl' } %>
-    </div>
-    <%= f.submit "J'suis chaud, j'vais tout péter 🥇", class: 'button' %>
-  <% end %>
-</div>
