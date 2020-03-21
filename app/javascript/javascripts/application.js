@@ -10,7 +10,6 @@ const participantsNode = document.querySelector('#participants');
 
 if (participantsNode) {
   const userId = participantsNode.dataset.currentUser;
-  const refresh = document.querySelector('#refresh');
   const start = document.querySelector('#start');
   const submitSong = document.querySelector('#submitSong');
   const songInput = document.querySelector('#songInput');
@@ -22,7 +21,6 @@ if (participantsNode) {
   initVideoPlayer();
 
   setCallback((data) => {
-    console.log(data.players.map(p => p.ready))
     renderPlayers(data);
     updateRoomStatus(data);
     updateChat(data.messages);
@@ -32,7 +30,6 @@ if (participantsNode) {
       (data.dealer.id == userId) ? playerIsDealer(data) : playerIsNotDealer();
 
       if (data.song_id && player.songId != data.song_id) {
-        console.log('set sour')
         player.source = {
           type: 'video',
           sources: [
@@ -52,10 +49,6 @@ if (participantsNode) {
       }
     }
     renderPlayers(data, userId);
-  })
-
-  refresh.addEventListener('click', () => {
-    perform('refresh');
   })
 
   start.addEventListener('click', () => {

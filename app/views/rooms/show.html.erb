@@ -25,7 +25,6 @@
 
     <div class="flex justify-center items-center">
       <button id="start" class="<%= 'hidden' if @room.started? %> border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Commencer 🎬</button>
-      <button id="refresh" class="border border-black border-solid px-4 py-2 mt-8 hover:bg-gray-200 mx-4">Rafraichir 🔥</button>
     </div>
 
     <div id="participants" class="mx-auto mt-8" data-token="<%= @room.token %>" data-current-user="<%= current_user.id %>"></div>

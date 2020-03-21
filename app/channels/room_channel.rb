@@ -23,10 +23,6 @@ class RoomChannel < ApplicationCable::Channel
     })
   end
 
-  def refresh
-    broadcast_game_status
-  end
-
   def message(data)
     Message.create(body: data['body'], player: current_player, room: room)
     broadcast_game_status
