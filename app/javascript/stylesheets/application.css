@@ -8,6 +8,8 @@
 
 @import "tailwindcss/utilities";
 
+@import "plyr/dist/plyr.css";
+
 #chat {
   width: 450px;
 }
@@ -36,6 +38,11 @@
 #plyr,
 .plyr {
   display: none;
+}
+
+body.debug #plyr,
+body.debug .plyr {
+  display: block;
 }
 
 .current-dealer .player:hover::after {

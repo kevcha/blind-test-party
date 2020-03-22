@@ -40,9 +40,14 @@ class Player < ApplicationRecord
       '“Je suis chaud bouillant“',
       '“Je suis pas pour faire tourner les serviettes“',
       '“Bande de rigolos“',
-      '“Saint Etienne 💚 > Lyon 👎“',
+      '“Saint Etienne 💚 > Lyon“',
       '“Qu‘est ce que je fous là ⁇“',
       '“quiéyeière ér ér ér???“',
+      '“Muscle ton jeu Robert !“',
+      '“PARCE QUE C‘EST NOTRE PROOOJJJJETTT !!!“',
+      '“The yes needs the no to win against the no 🤔“',
+      '“Hakuna Matata“',
+      '“Tu bluffes Martoni 🤥“',
     ].sample
   end
 end
